@@ -52,7 +52,7 @@
                 <div class="tab-pane fade" id="v-pills-marker" role="tabpanel" aria-labelledby="v-pills-marker-tab">
                     <div id="map1" class="map"></div>
                     <div class="col-12 mt-1 pl-0">
-                        <button class="btn btn-primary btn-sm" onclick="mapMarkerRemove(map1);">Clear Markers</button>
+                        <button class="btn btn-danger btn-sm" onclick="mapMarkerRemove(map1);">Clear Markers</button>
                     </div>
                     <script>
                         //#region For first map
@@ -82,7 +82,7 @@
                 <div class="tab-pane fade" id="v-pills-circle" role="tabpanel" aria-labelledby="v-pills-circle-tab">
                     <div id="map2" class="map"></div>
                     <div class="col-12 mt-1 pl-0">
-                        <button class="btn btn-primary btn-sm" onclick="mapCircleRemove(map2);">Clear Circles</button>
+                        <button class="btn btn-danger btn-sm" onclick="mapCircleRemove(map2);">Clear Circles</button>
                     </div>
                     <script>
                         //#region For second map
@@ -102,7 +102,7 @@
                 <div class="tab-pane fade" id="v-pills-polygon" role="tabpanel" aria-labelledby="v-pills-polygon-tab">
                     <div id="map3" class="map"></div>
                     <div class="col-12 mt-1 pl-0">
-                        <button class="btn btn-primary btn-sm" onclick="savePolygonAreaToMap3();">Save Polygon</button>
+                        <button class="btn btn-success btn-sm" onclick="savePolygonAreaToMap3();">Save Polygon</button>
                         <button class="btn btn-danger btn-sm" onclick="mapPolygonRemove(map3); clearCurrentCoordinates();">Clear Polygons</button>
                     </div>
                     <script>
@@ -138,7 +138,8 @@
                 <div class="tab-pane fade show active" id="v-pills-polyline" role="tabpanel" aria-labelledby="v-pills-polyline-tab">
                     <div id="map4" class="map"></div>
                     <div class="col-12 mt-1 pl-0">
-                        <button class="btn btn-primary btn-sm" onclick="mapPolylineRemove(map4);">Clear Polylines</button>
+                        <button class="btn btn-success btn-sm" onclick="savePolylineToMap4();">Save Polylines</button>
+                        <button class="btn btn-danger btn-sm" onclick="mapPolylineRemove(map4);">Clear Polylines</button>
                     </div>
                     <script>
                         //#region For fourth map
@@ -152,6 +153,12 @@
 
                             currentCoordinatesForPolylines.push([_latLng.lat, _latLng.lng]);
                             mapPolylineAdd(map4, "testDynamicPolyline", currentCoordinatesForPolylines, "green");
+                        }
+
+                        function savePolylineToMap4(){
+                            mapPolygonRemove(map4, "testDynamicPolyline");
+                            mapPolylineAdd(map4, "testDynamicPolyline", currentCoordinatesForPolylines, "gray");
+                            currentCoordinatesForPolylines=[];
                         }
                         //#endregion
                     </script>
