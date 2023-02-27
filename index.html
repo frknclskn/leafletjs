@@ -1,0 +1,105 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <style>
+        .map {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+    <!--<script src="assets/scripts/PolylineDecoder/leaflet.polylineDecorator.js"></script>-->
+
+    <script src="leafletHelper.js"></script>
+</head>
+<body>
+    <div id="map1" class="map" onkeydown="myFunction(event)"></div>
+    <script>
+        var test = leafletHelper.mapSet({
+            mapId: "map1", latLng: [lat = 39.925162, lon = 32.836989], zoom: 13, maxZoom: 18, onClickFunc: (res) => {
+                var markerId = new Date().getTime();
+                leafletHelper.marker.add({
+                    map: test,
+                    markerId: markerId,
+                    latLng: res.latlng
+                });
+
+                setTimeout(() => {
+                    leafletHelper.marker.delete({
+                        map: test,
+                        markerId: markerId
+                    });
+                }, 5000);
+            }
+        });
+        var lat = 39.925162;
+        var lng = 32.836989;
+        var upSize = 0.001100;
+        var int = null;
+        var lastCode = "";
+        var markers = {};
+        function myFunction(e) {
+            var code = e.code;
+            if (!lastCode) {
+                lastCode = code;
+            }
+
+            if (lastCode != code) {
+                clearInterval(int);
+                int = null;
+                lastCode = code;
+            }
+            if (!int) {
+
+                int = setInterval(() => {
+                    switch (code) {
+                        case "KeyA":
+                            lng -= upSize;
+                            break;
+                        case "KeyS":
+                            lat -= (upSize);
+                            break;
+                        case "KeyD":
+                            lng += upSize;
+                            break;
+                        case "KeyW":
+                            lat += upSize;
+                            break;
+                        default:
+                            clearInterval(int);
+                            int = null;
+                            break;
+                    }
+
+                    var markerId = new Date().getTime();
+
+                    var latLng = [lat = lat, lng = lng];
+                    leafletHelper.marker.add({
+                        map: test,
+                        markerId: markerId,
+                        latLng: latLng
+                    });
+                    leafletHelper.mapSetCenter(test, lat, lng);
+                    setTimeout(() => {
+                        leafletHelper.marker.delete({
+                            map: test,
+                            markerId: markerId
+                        });
+                    }, 5000);
+                }, 50);
+
+            }
+
+
+        }
+    </script>
+</body>
+</html>
