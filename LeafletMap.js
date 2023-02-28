@@ -167,7 +167,7 @@ function mapMarkerTooltipToggle(mapId) {
 //#endregion
 
 //#region circle options
-function mapCircleAdd(map, circleId, latLng = [lat = 39.925162, lon = 32.836989], popUp = null, borderColor = "red", color = "#f03", radius = 500, opacity = 0.75) {
+function mapCircleAdd(map, circleId, latLng = [lat = 39.925162, lon = 32.836989], popUp = null, borderColor = "red", color = "f03", radius = 500, opacity = 0.75) {
     var options = {
         color: borderColor,
         fillColor: color,

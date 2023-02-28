@@ -16,90 +16,73 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 
-    <!--<script src="assets/scripts/PolylineDecoder/leaflet.polylineDecorator.js"></script>-->
+    <script src="assets/scripts/PolylineDecoder/leaflet.polylineDecorator.js"></script>
 
     <script src="leafletHelper.js"></script>
 </head>
 <body>
-    <div id="map1" class="map" onkeydown="myFunction(event)"></div>
+    <div id="map1" class="map"></div>
     <script>
-        var test = leafletHelper.mapSet({
-            mapId: "map1", latLng: [lat = 39.925162, lon = 32.836989], zoom: 13, maxZoom: 18, onClickFunc: (res) => {
-                var markerId = new Date().getTime();
-                leafletHelper.marker.add({
-                    map: test,
-                    markerId: markerId,
-                    latLng: res.latlng
+        var map1 = leafletHelper.map.init({
+            mapId: "map1", latLng: [lat = 39.925162, lon = 32.836989], zoom: 13, maxZoom: 18,
+            onClick: (res) => {
+                var id = new Date().getTime();
+                //leafletHelper.marker.add({
+                //    map: map1, id: id, latLng: res.latlng,
+                //    markerOptions: {
+                //        draggable: true
+                //    },
+                //    tooltip: {
+                //        html: "Tooltip Html",
+                //        opacity: 1,
+                //        sticky: true,
+                //        permanent: true
+                //    },
+                //    onClick: (e) => {
+                //        console.log("clicked");
+                //        console.log(e);
+                //    },
+                //    onDrag: (e) => {
+                //        console.log("dragged");
+                //        console.log(e);
+                //    },
+                //});
+                //setTimeout(() => { leafletHelper.marker.delete( map1,  id ); }, 5000);
+
+
+                //leafletHelper.popup.add({ map: map1, id: id, lat: res.latlng.lat, lng: res.latlng.lng, content: "Popup:" + id });
+
+                //leafletHelper.map.setCenter({ map: map1, latLng: res.latlng });
+
+                //leafletHelper.circle.add({
+                //    map: map1,
+                //    id: id,
+                //    circleOptions: {
+                //        radius: 500,
+                //        draggable: true
+                //    },
+                //    popUp: "Circle Popup: " + id,
+                //    latLng: res.latlng
+                //});
+
+                //leafletHelper.polygon.add({
+                //    map: map1,
+                //    id: id,
+                //    coordinates: [[39.925162, 32.836989], [39.925222, 32.836022], [39.923162, 32.836908]]
+                //});
+                //setTimeout(() => { leafletHelper.polygon.delete(map1, id); }, 2000);
+
+                leafletHelper.polyline.add({
+                    map: map1,
+                    id: id,
+                    coordinates: [[40.029178, 32.998415], [40.022148, 32.981515], [40.021551, 32.916359]]
                 });
 
-                setTimeout(() => {
-                    leafletHelper.marker.delete({
-                        map: test,
-                        markerId: markerId
-                    });
-                }, 5000);
+            },
+            onMouseMove: (e) => {
+                //console.log(e);
             }
         });
-        var lat = 39.925162;
-        var lng = 32.836989;
-        var upSize = 0.001100;
-        var int = null;
-        var lastCode = "";
-        var markers = {};
-        function myFunction(e) {
-            var code = e.code;
-            if (!lastCode) {
-                lastCode = code;
-            }
-
-            if (lastCode != code) {
-                clearInterval(int);
-                int = null;
-                lastCode = code;
-            }
-            if (!int) {
-
-                int = setInterval(() => {
-                    switch (code) {
-                        case "KeyA":
-                            lng -= upSize;
-                            break;
-                        case "KeyS":
-                            lat -= (upSize);
-                            break;
-                        case "KeyD":
-                            lng += upSize;
-                            break;
-                        case "KeyW":
-                            lat += upSize;
-                            break;
-                        default:
-                            clearInterval(int);
-                            int = null;
-                            break;
-                    }
-
-                    var markerId = new Date().getTime();
-
-                    var latLng = [lat = lat, lng = lng];
-                    leafletHelper.marker.add({
-                        map: test,
-                        markerId: markerId,
-                        latLng: latLng
-                    });
-                    leafletHelper.mapSetCenter(test, lat, lng);
-                    setTimeout(() => {
-                        leafletHelper.marker.delete({
-                            map: test,
-                            markerId: markerId
-                        });
-                    }, 5000);
-                }, 50);
-
-            }
-
-
-        }
     </script>
 </body>
 </html>
